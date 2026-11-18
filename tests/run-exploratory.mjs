@@ -26,8 +26,21 @@ const offListLoads = [
 ];
 const benchLoads = [0, 62.5, 135].map(press =>
   runCheckIn(cases[1], { complete: true, loads: { press } }));
+const capChecks = [[input, ['squat', 'row', 'hinge']], [cases[1], ['press', 'pull', 'deadlift']]]
+  .flatMap(([data, ids]) => ids.map(id => ({
+    id, atCap: runCheckIn(data, { loads: { [id]: 500 } }),
+    overCap: runCheckIn(data, { loads: { [id]: 500.5 } })
+  })));
 const results = {
   ranAtUtc: new Date().toISOString(),
+  exerciseLoadCap: {
+    passed: capChecks.every(({ id, atCap, overCap }) => {
+      const entries = atCap.draft?.plan.sessions.flat().filter(entry => entry.id === id);
+      return Boolean(entries?.length && entries.every(entry => entry.weight === 500) &&
+        overCap.result.reason === 'invalid_load' && !overCap.draft);
+    }),
+    actual: capChecks
+  },
   reportedBenchLoads: {
     passed: benchLoads.every(state => {
       const weight = state.input.checkIn.loads.press;

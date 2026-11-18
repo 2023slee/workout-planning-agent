@@ -1,5 +1,5 @@
 import { cases, exercises } from './data.mjs';
-import { startCase, generate, edit, approve, clientView, planForProfile } from './planner.mjs';
+import { startCase, generate, edit, approve, clientView, planForProfile, maxExerciseLoad } from './planner.mjs';
 
 const get = id => document.getElementById(id);
 const make = (tag, text, classes) => {
@@ -30,6 +30,7 @@ function renderLoadInputs(profile, checkIn) {
   const entries = planForProfile(profile)?.sessions.flat() ?? [];
   const weighted = new Map(entries.filter(({ id }) => exercises[id].gear !== 'Bodyweight').map(entry => [entry.id, entry]));
   const loads = checkIn?.loads ?? { [checkIn?.trackedExercise]: checkIn?.weight };
+  get('load-hint').textContent = `Enter 0–${maxExerciseLoad} lb for each weighted exercise. Leave a field blank to keep the plan load.`;
   const fields = get('load-inputs');
   fields.replaceChildren();
   get('exercise-loads').hidden = weighted.size === 0;
@@ -38,6 +39,7 @@ function renderLoadInputs(profile, checkIn) {
     const input = make('input');
     input.type = 'number';
     input.min = '0';
+    input.max = String(maxExerciseLoad);
     input.step = 'any';
     input.dataset.exercise = id;
     input.placeholder = `Plan: ${entry.weight} lb`;

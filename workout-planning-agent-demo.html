@@ -107,7 +107,7 @@ footer{color:var(--muted);font-size:12px;display:flex;justify-content:space-betw
             <p class="muted small" id="difficulty-hint">Ratings 1–3 or 9–10 go to coach review.</p>
             <fieldset id="exercise-loads" hidden>
               <legend>Last exercise loads (lb)</legend>
-              <p class="muted small">Enter the last load for each weighted exercise. Leave a field blank to keep the plan load.</p>
+              <p class="muted small" id="load-hint"></p>
               <div class="fields" id="load-inputs"></div>
             </fieldset>
             <label class="toggle"><input id="complete" type="checkbox"> All prescribed sessions, sets, and reps completed</label>
@@ -185,6 +185,7 @@ const cases = [
 ];
 
 
+const maxExerciseLoad = 500;
 const painReply = 'Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.';
 const route = (reason, message) => ({ type: 'escalation', reason, message, notifyCoach: true });
 
@@ -234,8 +235,8 @@ function recommend({ profile, checkIn, question }) {
     const exercise = exercises[entry.id];
     if (exercise.gear === 'Bodyweight') continue;
     const weight = reportedLoads[entry.id];
-    if (!Number.isFinite(weight) || weight < 0) {
-      return route('invalid_load', `${exercise.name}: enter a valid nonnegative load. Coach review requested.`);
+    if (!Number.isFinite(weight) || weight < 0 || weight > maxExerciseLoad) {
+      return route('invalid_load', `${exercise.name}: enter a load from 0 to ${maxExerciseLoad} lb. Coach review requested.`);
     }
     const index = exercise.loads.indexOf(weight);
     if (index < 0) {
@@ -323,6 +324,7 @@ function renderLoadInputs(profile, checkIn) {
   const entries = planForProfile(profile)?.sessions.flat() ?? [];
   const weighted = new Map(entries.filter(({ id }) => exercises[id].gear !== 'Bodyweight').map(entry => [entry.id, entry]));
   const loads = checkIn?.loads ?? { [checkIn?.trackedExercise]: checkIn?.weight };
+  get('load-hint').textContent = `Enter 0–${maxExerciseLoad} lb for each weighted exercise. Leave a field blank to keep the plan load.`;
   const fields = get('load-inputs');
   fields.replaceChildren();
   get('exercise-loads').hidden = weighted.size === 0;
@@ -331,6 +333,7 @@ function renderLoadInputs(profile, checkIn) {
     const input = make('input');
     input.type = 'number';
     input.min = '0';
+    input.max = String(maxExerciseLoad);
     input.step = 'any';
     input.dataset.exercise = id;
     input.placeholder = `Plan: ${entry.weight} lb`;

@@ -1,5 +1,6 @@
 import { exercises, plans } from './data.mjs';
 
+export const maxExerciseLoad = 500;
 export const painReply = 'Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.';
 const route = (reason, message) => ({ type: 'escalation', reason, message, notifyCoach: true });
 
@@ -49,8 +50,8 @@ export function recommend({ profile, checkIn, question }) {
     const exercise = exercises[entry.id];
     if (exercise.gear === 'Bodyweight') continue;
     const weight = reportedLoads[entry.id];
-    if (!Number.isFinite(weight) || weight < 0) {
-      return route('invalid_load', `${exercise.name}: enter a valid nonnegative load. Coach review requested.`);
+    if (!Number.isFinite(weight) || weight < 0 || weight > maxExerciseLoad) {
+      return route('invalid_load', `${exercise.name}: enter a load from 0 to ${maxExerciseLoad} lb. Coach review requested.`);
     }
     const index = exercise.loads.indexOf(weight);
     if (index < 0) {
