@@ -4,7 +4,11 @@ A 70-445 midpoint sandbox for drafting and reviewing a weekly workout plan. All 
 
 ## Open the demo
 
-Double-click `workout-planning-agent-demo.html` to open the self-contained demo. It works offline in a current browser. For development, serve `dist/` with any local static server, for example `python3 -m http.server 8000 --directory dist`, and open http://localhost:8000.
+1. Open [workout-planning-agent-demo.html](workout-planning-agent-demo.html) on GitHub.
+2. Click **Download raw file** (the download icon on the file toolbar). You can also choose **Code → Download ZIP** from the repository home page and unzip it.
+3. Open the saved `.html` file in Chrome or another current browser. The demo runs offline and needs no login, API key, or installation.
+
+For development, serve `dist/` with a local static server, for example `python3 -m http.server 8000 --directory dist`, and open http://localhost:8000.
 
 ## Review in three minutes
 
@@ -24,3 +28,11 @@ Review `evidence/scoring-plan.md` before testing. For each case, select the corr
 The automated midpoint suite passed 12 of 12 cases on the initial and revised versions. Exploratory runs found two problems: new pain did not withdraw the existing client preview and an unlisted load silently reverted to the library's load. The original outputs are preserved under `evidence/`, and the two targeted checks passed after corrections. Browser QA separately exercised approval, editing, reapproval, and the pain queue. The hit rate covers the fixed synthetic cases. Free-form exercise wording has limited coverage, free-text pain notes do not substitute for the pain checkbox, and coach roles and notifications are browser simulations. Time savings have yet to be measured.
 
 If you extend the system with a model, keep the deterministic rules and approval gate outside the model. Review the implementation and complete the team AI-use log before submission.
+
+## Midpoint evidence
+
+- [Scoring rules recorded before the run](evidence/scoring-plan.md) and [recorded timestamp](evidence/criterion-recorded-utc.txt)
+- [Complete scored run with expected and actual results](evidence/midpoint-results.json)
+- [Verbatim exploratory failures](evidence/exploratory-initial.json) and [targeted retests](evidence/exploratory-results.json)
+
+The repository supplies the runnable prototype and supporting evidence for the midpoint PDF. The team submits the PDF as a separate Canvas upload.
