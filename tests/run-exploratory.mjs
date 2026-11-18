@@ -21,8 +21,19 @@ const loads = varied.draft?.plan.sessions.flat();
 const expectLoad = (id, weight) => Boolean(loads?.filter(entry => entry.id === id).length &&
   loads.filter(entry => entry.id === id).every(entry => entry.weight === weight));
 const unsupportedRow = runCheckIn(input, { loads: { squat: 20, row: 22 } });
+const benchLoads = [0, 62.5, 135].map(press =>
+  runCheckIn(cases[1], { complete: true, loads: { press } }));
 const results = {
   ranAtUtc: new Date().toISOString(),
+  reportedBenchLoads: {
+    passed: benchLoads.every(state => {
+      const weight = state.input.checkIn.loads.press;
+      const entries = state.draft?.plan.sessions.flat().filter(entry => entry.id === 'press');
+      return Boolean(entries?.length && entries.every(entry => entry.weight === weight) &&
+        state.result.message.includes('no automatic increase') && clientView(state) === null);
+    }),
+    actual: benchLoads
+  },
   lowDifficulty: {
     passed: easy.every(state => state.result.reason === 'low_difficulty' && !state.draft &&
       state.events.some(event => event.event === 'coach_queued')),

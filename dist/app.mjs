@@ -93,7 +93,7 @@ function renderPlan(container, versioned) {
     const body = table.createTBody();
     for (const entry of session) {
       const row = body.insertRow();
-      for (const value of [exercises[entry.id].name, entry.sets, entry.reps, entry.weight ? `${entry.weight} lb` : 'Bodyweight']) {
+      for (const value of [exercises[entry.id].name, entry.sets, entry.reps, exercises[entry.id].gear === 'Bodyweight' ? 'Bodyweight' : `${entry.weight} lb`]) {
         row.append(make('td', String(value)));
       }
     }

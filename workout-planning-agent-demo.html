@@ -228,23 +228,28 @@ function recommend({ profile, checkIn, question }) {
 
   const plan = structuredClone(selected);
   const reportedLoads = checkIn.loads ?? { [checkIn.trackedExercise]: checkIn.weight };
-  const progressions = new Map();
+  const adjustments = new Map();
   for (const entry of plan.sessions.flat()) {
     if (!Object.hasOwn(reportedLoads, entry.id)) continue;
     const exercise = exercises[entry.id];
     const weight = reportedLoads[entry.id];
     const index = exercise.loads.indexOf(weight);
+    if (index < 0 && entry.id === 'press' && Number.isFinite(weight) && weight >= 0 && weight <= 999) {
+      entry.weight = weight;
+      adjustments.set(entry.id, `Bench press stays at the reported ${weight} lb for coach review, with no automatic increase`);
+      continue;
+    }
     if (index < 0) {
       return route('unlisted_load', `${exercise.name}: the reported load is outside the approved list. Coach review requested.`);
     }
     const nextWeight = exercise.loads[index + 1];
     const canProgress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
     entry.weight = canProgress ? nextWeight : weight;
-    if (canProgress) progressions.set(entry.id, `${exercise.name} moves from ${weight} to the next listed load, ${nextWeight} lb`);
+    if (canProgress) adjustments.set(entry.id, `${exercise.name} moves from ${weight} to the next listed load, ${nextWeight} lb`);
   }
 
   const rationale = `Matches the ${plan.goal.toLowerCase()} goal and ${plan.level.toLowerCase()} level, with ${plan.sessions.length} sessions of ${plan.minutes} minutes using available equipment.`;
-  const changes = [...progressions.values()];
+  const changes = [...adjustments.values()];
   const message = changes.length ? `${rationale} ${new Intl.ListFormat('en').format(changes)}.` : rationale;
   return { type: 'draft', plan, message, notifyCoach: false };
 }
@@ -380,7 +385,7 @@ function renderPlan(container, versioned) {
     const body = table.createTBody();
     for (const entry of session) {
       const row = body.insertRow();
-      for (const value of [exercises[entry.id].name, entry.sets, entry.reps, entry.weight ? `${entry.weight} lb` : 'Bodyweight']) {
+      for (const value of [exercises[entry.id].name, entry.sets, entry.reps, exercises[entry.id].gear === 'Bodyweight' ? 'Bodyweight' : `${entry.weight} lb`]) {
         row.append(make('td', String(value)));
       }
     }
