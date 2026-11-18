@@ -19,11 +19,13 @@ For development, serve `dist/` with a local static server, for example `python3 
 3. Select case 08 and click **Run agent**. Verify that the simulated coach queue receives a notification and that the plan is paused.
 4. Use **Download JSON** before switching cases. Switching cases or hitting **Reset case** starts a fresh session.
 
+To test the updated check-in, enter loads for any weighted exercises shown for the selected plan. Blank fields keep their library loads. Ratings of **1–3** (too easy) or **9–10** pause drafting and go to coach review.
+
 ## Test Exhibit A
 
 Review `evidence/scoring-plan.md` before testing. For each case, select the corresponding preset, click **Run agent**, verify the case's expected result, and download the JSON before selecting the next case. For case 12, also perform the approval, edit, and reapproval walkthrough. A pass requires every expected outcome. Record date, tester, version, expected result, actual result, and pass or fail. Keep failed outputs verbatim. Have a teammate who did not implement the workflow conduct the browser test.
 
-`node tests/run-midpoint.mjs` runs all 12 cases against the planner and approval code. `node tests/run-exploratory.mjs` checks two additional outcomes. Either command accepts an optional path for a new JSON evidence file.
+`node tests/run-midpoint.mjs` runs all 12 cases against the planner and approval code. `node tests/run-exploratory.mjs` checks low difficulty, per-exercise loads, and the original escalation regressions. Either command accepts an optional path for a new JSON evidence file.
 
 ## Evidence and limitations
 

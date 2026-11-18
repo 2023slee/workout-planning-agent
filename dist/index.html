@@ -48,8 +48,13 @@
           <label class="toggle"><input id="missing" type="checkbox"> Check-in missing</label>
           <fieldset id="checkin-fields">
             <legend class="sr">Check-in details</legend>
-            <div class="fields"><label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" required></label>
-            <label>Last goblet squat load (lb)<input id="weight" type="number" min="0" max="999" step="1" required></label></div>
+            <label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" aria-describedby="difficulty-hint" required></label>
+            <p class="muted small" id="difficulty-hint">Ratings 1–3 or 9–10 go to coach review.</p>
+            <fieldset id="exercise-loads" hidden>
+              <legend>Last exercise loads (lb)</legend>
+              <p class="muted small">Enter the last load for each weighted exercise. Leave a field blank to keep the plan load.</p>
+              <div class="fields" id="load-inputs"></div>
+            </fieldset>
             <label class="toggle"><input id="complete" type="checkbox"> All prescribed sessions, sets, and reps completed</label>
             <label class="toggle"><input id="pain" type="checkbox"> New pain reported</label>
             <label>Check-in note<input id="pain-note" maxlength="280" placeholder="Optional synthetic note"></label>

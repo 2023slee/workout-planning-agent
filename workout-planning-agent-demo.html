@@ -39,6 +39,8 @@ select{margin-top:0}
 input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px;margin:0}
 .toggle{display:flex;gap:9px;align-items:center;margin:12px 0;font-weight:500}
 fieldset{margin:0 0 13px;padding:0;border:0;min-width:0}
+#exercise-loads legend{padding:0;font-size:14px;font-weight:650}
+#exercise-loads .small,#difficulty-hint{margin-top:4px}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 dl{display:grid;grid-template-columns:auto 1fr;gap:7px 13px;margin:15px 0;font-size:13px}
 dt{color:var(--muted)}dd{margin:0;font-weight:630}
@@ -101,8 +103,13 @@ footer{color:var(--muted);font-size:12px;display:flex;justify-content:space-betw
           <label class="toggle"><input id="missing" type="checkbox"> Check-in missing</label>
           <fieldset id="checkin-fields">
             <legend class="sr">Check-in details</legend>
-            <div class="fields"><label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" required></label>
-            <label>Last goblet squat load (lb)<input id="weight" type="number" min="0" max="999" step="1" required></label></div>
+            <label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" aria-describedby="difficulty-hint" required></label>
+            <p class="muted small" id="difficulty-hint">Ratings 1–3 or 9–10 go to coach review.</p>
+            <fieldset id="exercise-loads" hidden>
+              <legend>Last exercise loads (lb)</legend>
+              <p class="muted small">Enter the last load for each weighted exercise. Leave a field blank to keep the plan load.</p>
+              <div class="fields" id="load-inputs"></div>
+            </fieldset>
             <label class="toggle"><input id="complete" type="checkbox"> All prescribed sessions, sets, and reps completed</label>
             <label class="toggle"><input id="pain" type="checkbox"> New pain reported</label>
             <label>Check-in note<input id="pain-note" maxlength="280" placeholder="Optional synthetic note"></label>
@@ -194,8 +201,20 @@ function handleQuestion(question) {
   return route('coach_question', 'Your question was added to the coach queue for follow-up.');
 }
 
+function planForProfile(profile) {
+  const eligible = plans.filter(plan => plan.goal === profile.goal && plan.level === profile.level &&
+    plan.sessions.length === profile.days && plan.minutes <= profile.minutes &&
+    plan.sessions.flat().every(({ id }) => !profile.restrictions.includes(id) &&
+      (exercises[id].gear === 'Bodyweight' || profile.equipment.includes(exercises[id].gear))));
+  eligible.sort((first, second) => second.minutes - first.minutes || first.id.localeCompare(second.id));
+  return eligible[0];
+}
+
 function recommend({ profile, checkIn, question }) {
   if (checkIn?.pain === true) return route('new_pain', painReply);
+  if (Number.isInteger(checkIn?.difficulty) && checkIn.difficulty >= 1 && checkIn.difficulty <= 3) {
+    return route('low_difficulty', 'Difficulty was 1–3 (too easy). Planning is paused for coach review.');
+  }
   if (question?.trim()) return handleQuestion(question);
 
   const validCheckIn = checkIn && Number.isInteger(checkIn.difficulty) &&
@@ -204,34 +223,30 @@ function recommend({ profile, checkIn, question }) {
   if (!validCheckIn) return route('missing_checkin', 'Weekly check-in is missing or incomplete. Coach review requested.');
   if (checkIn.difficulty >= 9) return route('high_difficulty', 'Difficulty was 9 or 10. Planning is paused for coach review.');
 
-  const eligible = plans.filter(plan => plan.goal === profile.goal && plan.level === profile.level &&
-    plan.sessions.length === profile.days && plan.minutes <= profile.minutes &&
-    plan.sessions.flat().every(({ id }) => !profile.restrictions.includes(id) &&
-      (exercises[id].gear === 'Bodyweight' || profile.equipment.includes(exercises[id].gear))));
-  if (!eligible.length) return route('no_plan', 'No approved plan fits this week’s constraints. Coach review requested.');
+  const selected = planForProfile(profile);
+  if (!selected) return route('no_plan', 'No approved plan fits this week’s constraints. Coach review requested.');
 
-  eligible.sort((first, second) => second.minutes - first.minutes || first.id.localeCompare(second.id));
-  const plan = structuredClone(eligible[0]);
-  const tracked = exercises[checkIn.trackedExercise];
-  const listedIndex = tracked?.loads.indexOf(checkIn.weight) ?? -1;
-  const tracksSelectedExercise = plan.sessions.flat().some(entry => entry.id === checkIn.trackedExercise);
-  if (tracksSelectedExercise && listedIndex < 0) {
-    return route('unlisted_load', 'The reported load is outside the approved list. Coach review requested.');
-  }
-  const nextWeight = listedIndex >= 0 ? tracked.loads[listedIndex + 1] : undefined;
-  const progress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
-  let changed = false;
-  for (const session of plan.sessions) {
-    for (const entry of session) {
-      if (entry.id !== checkIn.trackedExercise || listedIndex < 0) continue;
-      entry.weight = progress ? nextWeight : checkIn.weight;
-      changed ||= progress;
+  const plan = structuredClone(selected);
+  const reportedLoads = checkIn.loads ?? { [checkIn.trackedExercise]: checkIn.weight };
+  const progressions = new Map();
+  for (const entry of plan.sessions.flat()) {
+    if (!Object.hasOwn(reportedLoads, entry.id)) continue;
+    const exercise = exercises[entry.id];
+    const weight = reportedLoads[entry.id];
+    const index = exercise.loads.indexOf(weight);
+    if (index < 0) {
+      return route('unlisted_load', `${exercise.name}: the reported load is outside the approved list. Coach review requested.`);
     }
+    const nextWeight = exercise.loads[index + 1];
+    const canProgress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
+    entry.weight = canProgress ? nextWeight : weight;
+    if (canProgress) progressions.set(entry.id, `${exercise.name} moves from ${weight} to the next listed load, ${nextWeight} lb`);
   }
 
   const rationale = `Matches the ${plan.goal.toLowerCase()} goal and ${plan.level.toLowerCase()} level, with ${plan.sessions.length} sessions of ${plan.minutes} minutes using available equipment.`;
-  const progression = changed ? ` ${tracked.name} moves from ${checkIn.weight} to the next listed load, ${nextWeight} lb.` : '';
-  return { type: 'draft', plan, message: rationale + progression, notifyCoach: false };
+  const changes = [...progressions.values()];
+  const message = changes.length ? `${rationale} ${new Intl.ListFormat('en').format(changes)}.` : rationale;
+  return { type: 'draft', plan, message, notifyCoach: false };
 }
 
 function startCase(input) {
@@ -298,6 +313,28 @@ function selectView(view) {
   for (const stage of stages) get(stage).hidden = stage !== view;
 }
 
+function renderLoadInputs(profile, checkIn) {
+  const entries = planForProfile(profile)?.sessions.flat() ?? [];
+  const weighted = new Map(entries.filter(({ id }) => exercises[id].gear !== 'Bodyweight').map(entry => [entry.id, entry]));
+  const loads = checkIn?.loads ?? { [checkIn?.trackedExercise]: checkIn?.weight };
+  const fields = get('load-inputs');
+  fields.replaceChildren();
+  get('exercise-loads').hidden = weighted.size === 0;
+  for (const [id, entry] of weighted) {
+    const label = make('label', exercises[id].name);
+    const input = make('input');
+    input.type = 'number';
+    input.min = '0';
+    input.max = '999';
+    input.step = 'any';
+    input.dataset.exercise = id;
+    input.placeholder = `Plan: ${entry.weight} lb`;
+    if (Object.hasOwn(loads, id)) input.value = loads[id];
+    label.append(input);
+    fields.append(label);
+  }
+}
+
 function loadCase(id) {
   const input = structuredClone(cases.find(item => item.id === id));
   state = startCase(input);
@@ -317,7 +354,7 @@ function loadCase(id) {
   get('missing').checked = input.checkIn === null;
   get('checkin-fields').disabled = input.checkIn === null;
   get('difficulty').value = input.checkIn?.difficulty ?? 6;
-  get('weight').value = input.checkIn?.weight ?? 20;
+  renderLoadInputs(profile, input.checkIn);
   get('complete').checked = input.checkIn?.complete ?? false;
   get('pain').checked = input.checkIn?.pain ?? false;
   get('pain-note').value = input.checkIn?.painNote ?? '';
@@ -440,10 +477,11 @@ get('missing').addEventListener('change', event => { get('checkin-fields').disab
 tabs.forEach(tab => tab.addEventListener('click', () => selectView(tab.dataset.view)));
 get('run-form').addEventListener('submit', event => {
   event.preventDefault();
+  const loads = Object.fromEntries([...get('load-inputs').querySelectorAll('input')]
+    .filter(input => input.value !== '').map(input => [input.dataset.exercise, input.valueAsNumber]));
   const checkIn = get('missing').checked ? null : {
     difficulty: get('difficulty').valueAsNumber, complete: get('complete').checked,
-    pain: get('pain').checked, painNote: get('pain-note').value, trackedExercise: 'squat',
-    weight: get('weight').valueAsNumber
+    pain: get('pain').checked, painNote: get('pain-note').value, loads
   };
   state = generate({ ...state, input: { ...state.input, checkIn, question: get('question').value } });
   render();

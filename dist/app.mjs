@@ -1,5 +1,5 @@
 import { cases, exercises } from './data.mjs';
-import { startCase, generate, edit, approve, clientView } from './planner.mjs';
+import { startCase, generate, edit, approve, clientView, planForProfile } from './planner.mjs';
 
 const get = id => document.getElementById(id);
 const make = (tag, text, classes) => {
@@ -26,6 +26,28 @@ function selectView(view) {
   for (const stage of stages) get(stage).hidden = stage !== view;
 }
 
+function renderLoadInputs(profile, checkIn) {
+  const entries = planForProfile(profile)?.sessions.flat() ?? [];
+  const weighted = new Map(entries.filter(({ id }) => exercises[id].gear !== 'Bodyweight').map(entry => [entry.id, entry]));
+  const loads = checkIn?.loads ?? { [checkIn?.trackedExercise]: checkIn?.weight };
+  const fields = get('load-inputs');
+  fields.replaceChildren();
+  get('exercise-loads').hidden = weighted.size === 0;
+  for (const [id, entry] of weighted) {
+    const label = make('label', exercises[id].name);
+    const input = make('input');
+    input.type = 'number';
+    input.min = '0';
+    input.max = '999';
+    input.step = 'any';
+    input.dataset.exercise = id;
+    input.placeholder = `Plan: ${entry.weight} lb`;
+    if (Object.hasOwn(loads, id)) input.value = loads[id];
+    label.append(input);
+    fields.append(label);
+  }
+}
+
 function loadCase(id) {
   const input = structuredClone(cases.find(item => item.id === id));
   state = startCase(input);
@@ -45,7 +67,7 @@ function loadCase(id) {
   get('missing').checked = input.checkIn === null;
   get('checkin-fields').disabled = input.checkIn === null;
   get('difficulty').value = input.checkIn?.difficulty ?? 6;
-  get('weight').value = input.checkIn?.weight ?? 20;
+  renderLoadInputs(profile, input.checkIn);
   get('complete').checked = input.checkIn?.complete ?? false;
   get('pain').checked = input.checkIn?.pain ?? false;
   get('pain-note').value = input.checkIn?.painNote ?? '';
@@ -168,10 +190,11 @@ get('missing').addEventListener('change', event => { get('checkin-fields').disab
 tabs.forEach(tab => tab.addEventListener('click', () => selectView(tab.dataset.view)));
 get('run-form').addEventListener('submit', event => {
   event.preventDefault();
+  const loads = Object.fromEntries([...get('load-inputs').querySelectorAll('input')]
+    .filter(input => input.value !== '').map(input => [input.dataset.exercise, input.valueAsNumber]));
   const checkIn = get('missing').checked ? null : {
     difficulty: get('difficulty').valueAsNumber, complete: get('complete').checked,
-    pain: get('pain').checked, painNote: get('pain-note').value, trackedExercise: 'squat',
-    weight: get('weight').valueAsNumber
+    pain: get('pain').checked, painNote: get('pain-note').value, loads
   };
   state = generate({ ...state, input: { ...state.input, checkIn, question: get('question').value } });
   render();

@@ -16,8 +16,20 @@ function handleQuestion(question) {
   return route('coach_question', 'Your question was added to the coach queue for follow-up.');
 }
 
+export function planForProfile(profile) {
+  const eligible = plans.filter(plan => plan.goal === profile.goal && plan.level === profile.level &&
+    plan.sessions.length === profile.days && plan.minutes <= profile.minutes &&
+    plan.sessions.flat().every(({ id }) => !profile.restrictions.includes(id) &&
+      (exercises[id].gear === 'Bodyweight' || profile.equipment.includes(exercises[id].gear))));
+  eligible.sort((first, second) => second.minutes - first.minutes || first.id.localeCompare(second.id));
+  return eligible[0];
+}
+
 export function recommend({ profile, checkIn, question }) {
   if (checkIn?.pain === true) return route('new_pain', painReply);
+  if (Number.isInteger(checkIn?.difficulty) && checkIn.difficulty >= 1 && checkIn.difficulty <= 3) {
+    return route('low_difficulty', 'Difficulty was 1–3 (too easy). Planning is paused for coach review.');
+  }
   if (question?.trim()) return handleQuestion(question);
 
   const validCheckIn = checkIn && Number.isInteger(checkIn.difficulty) &&
@@ -26,34 +38,30 @@ export function recommend({ profile, checkIn, question }) {
   if (!validCheckIn) return route('missing_checkin', 'Weekly check-in is missing or incomplete. Coach review requested.');
   if (checkIn.difficulty >= 9) return route('high_difficulty', 'Difficulty was 9 or 10. Planning is paused for coach review.');
 
-  const eligible = plans.filter(plan => plan.goal === profile.goal && plan.level === profile.level &&
-    plan.sessions.length === profile.days && plan.minutes <= profile.minutes &&
-    plan.sessions.flat().every(({ id }) => !profile.restrictions.includes(id) &&
-      (exercises[id].gear === 'Bodyweight' || profile.equipment.includes(exercises[id].gear))));
-  if (!eligible.length) return route('no_plan', 'No approved plan fits this week’s constraints. Coach review requested.');
+  const selected = planForProfile(profile);
+  if (!selected) return route('no_plan', 'No approved plan fits this week’s constraints. Coach review requested.');
 
-  eligible.sort((first, second) => second.minutes - first.minutes || first.id.localeCompare(second.id));
-  const plan = structuredClone(eligible[0]);
-  const tracked = exercises[checkIn.trackedExercise];
-  const listedIndex = tracked?.loads.indexOf(checkIn.weight) ?? -1;
-  const tracksSelectedExercise = plan.sessions.flat().some(entry => entry.id === checkIn.trackedExercise);
-  if (tracksSelectedExercise && listedIndex < 0) {
-    return route('unlisted_load', 'The reported load is outside the approved list. Coach review requested.');
-  }
-  const nextWeight = listedIndex >= 0 ? tracked.loads[listedIndex + 1] : undefined;
-  const progress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
-  let changed = false;
-  for (const session of plan.sessions) {
-    for (const entry of session) {
-      if (entry.id !== checkIn.trackedExercise || listedIndex < 0) continue;
-      entry.weight = progress ? nextWeight : checkIn.weight;
-      changed ||= progress;
+  const plan = structuredClone(selected);
+  const reportedLoads = checkIn.loads ?? { [checkIn.trackedExercise]: checkIn.weight };
+  const progressions = new Map();
+  for (const entry of plan.sessions.flat()) {
+    if (!Object.hasOwn(reportedLoads, entry.id)) continue;
+    const exercise = exercises[entry.id];
+    const weight = reportedLoads[entry.id];
+    const index = exercise.loads.indexOf(weight);
+    if (index < 0) {
+      return route('unlisted_load', `${exercise.name}: the reported load is outside the approved list. Coach review requested.`);
     }
+    const nextWeight = exercise.loads[index + 1];
+    const canProgress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
+    entry.weight = canProgress ? nextWeight : weight;
+    if (canProgress) progressions.set(entry.id, `${exercise.name} moves from ${weight} to the next listed load, ${nextWeight} lb`);
   }
 
   const rationale = `Matches the ${plan.goal.toLowerCase()} goal and ${plan.level.toLowerCase()} level, with ${plan.sessions.length} sessions of ${plan.minutes} minutes using available equipment.`;
-  const progression = changed ? ` ${tracked.name} moves from ${checkIn.weight} to the next listed load, ${nextWeight} lb.` : '';
-  return { type: 'draft', plan, message: rationale + progression, notifyCoach: false };
+  const changes = [...progressions.values()];
+  const message = changes.length ? `${rationale} ${new Intl.ListFormat('en').format(changes)}.` : rationale;
+  return { type: 'draft', plan, message, notifyCoach: false };
 }
 
 export function startCase(input) {
