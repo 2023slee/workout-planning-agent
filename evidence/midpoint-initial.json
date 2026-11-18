@@ -1,0 +1,1625 @@
+{
+  "ranAtUtc": "2026-11-18T00:22:19.420Z",
+  "passed": 12,
+  "total": 12,
+  "hitRate": 1,
+  "rows": [
+    {
+      "id": "01",
+      "title": "Beginner with two short sessions",
+      "expected": "Beginner general fitness, two sessions, at most 30 min.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "01",
+          "title": "Beginner with two short sessions",
+          "profile": {
+            "name": "Jordan",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "draft",
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          },
+          "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+          "notifyCoach": false
+        },
+        "draft": {
+          "version": 1,
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          }
+        },
+        "released": null,
+        "version": 1,
+        "events": [
+          {
+            "event": "draft",
+            "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "02",
+      "title": "Experienced client with full gym",
+      "expected": "Experienced strength, four sessions, at most 50 min.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "02",
+          "title": "Experienced client with full gym",
+          "profile": {
+            "name": "Casey",
+            "goal": "Strength",
+            "level": "Experienced",
+            "days": 4,
+            "minutes": 50,
+            "equipment": [
+              "Dumbbells",
+              "Barbell",
+              "Cable"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 3,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 4,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "draft",
+          "plan": {
+            "id": "strength-4",
+            "name": "Four-day strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 45,
+            "sessions": [
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ],
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ]
+            ]
+          },
+          "message": "Matches the strength goal and experienced level, with 4 sessions of 45 minutes using available equipment.",
+          "notifyCoach": false
+        },
+        "draft": {
+          "version": 1,
+          "plan": {
+            "id": "strength-4",
+            "name": "Four-day strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 45,
+            "sessions": [
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ],
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ]
+            ]
+          }
+        },
+        "released": null,
+        "version": 1,
+        "events": [
+          {
+            "event": "draft",
+            "message": "Matches the strength goal and experienced level, with 4 sessions of 45 minutes using available equipment.",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "03",
+      "title": "Dumbbells only",
+      "expected": "Draft only includes dumbbell or bodyweight exercises.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "03",
+          "title": "Dumbbells only",
+          "profile": {
+            "name": "Avery",
+            "goal": "Strength",
+            "level": "Experienced",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "draft",
+          "plan": {
+            "id": "strength-db-2",
+            "name": "Two-day dumbbell strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          },
+          "message": "Matches the strength goal and experienced level, with 2 sessions of 30 minutes using available equipment.",
+          "notifyCoach": false
+        },
+        "draft": {
+          "version": 1,
+          "plan": {
+            "id": "strength-db-2",
+            "name": "Two-day dumbbell strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          }
+        },
+        "released": null,
+        "version": 1,
+        "events": [
+          {
+            "event": "draft",
+            "message": "Matches the strength goal and experienced level, with 2 sessions of 30 minutes using available equipment.",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "04",
+      "title": "Schedule drops from four days to two",
+      "expected": "Four sessions in recent history, two sessions in draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "04",
+          "title": "Schedule drops from four days to two",
+          "profile": {
+            "name": "Morgan",
+            "goal": "Strength",
+            "level": "Experienced",
+            "days": 2,
+            "minutes": 50,
+            "equipment": [
+              "Dumbbells",
+              "Barbell",
+              "Cable"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 3,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 4,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": "",
+          "priorDays": 4
+        },
+        "result": {
+          "type": "draft",
+          "plan": {
+            "id": "strength-2",
+            "name": "Two-day strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 45,
+            "sessions": [
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ]
+            ]
+          },
+          "message": "Matches the strength goal and experienced level, with 2 sessions of 45 minutes using available equipment.",
+          "notifyCoach": false
+        },
+        "draft": {
+          "version": 1,
+          "plan": {
+            "id": "strength-2",
+            "name": "Two-day strength",
+            "goal": "Strength",
+            "level": "Experienced",
+            "minutes": 45,
+            "sessions": [
+              [
+                {
+                  "id": "press",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 65
+                },
+                {
+                  "id": "pull",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 50
+                }
+              ],
+              [
+                {
+                  "id": "deadlift",
+                  "sets": 3,
+                  "reps": 6,
+                  "weight": 75
+                },
+                {
+                  "id": "squat",
+                  "sets": 3,
+                  "reps": 8,
+                  "weight": 20
+                }
+              ]
+            ]
+          }
+        },
+        "released": null,
+        "version": 1,
+        "events": [
+          {
+            "event": "draft",
+            "message": "Matches the strength goal and experienced level, with 2 sessions of 45 minutes using available equipment.",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "05",
+      "title": "Approved weight progression",
+      "expected": "Squat increases exactly 20 to 25 lb and other loads stay the same.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "05",
+          "title": "Approved weight progression",
+          "profile": {
+            "name": "Taylor",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": true,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "draft",
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 25
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          },
+          "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment. Goblet squat moves from 20 to the next listed load, 25 lb.",
+          "notifyCoach": false
+        },
+        "draft": {
+          "version": 1,
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 25
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          }
+        },
+        "released": null,
+        "version": 1,
+        "events": [
+          {
+            "event": "draft",
+            "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment. Goblet squat moves from 20 to the next listed load, 25 lb.",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "06",
+      "title": "Difficulty 10",
+      "expected": "Difficulty 10 queues the coach and produces no draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "06",
+          "title": "Difficulty 10",
+          "profile": {
+            "name": "Cameron",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 10,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "escalation",
+          "reason": "high_difficulty",
+          "message": "Difficulty was 9 or 10. Planning is paused for coach review.",
+          "notifyCoach": true
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "escalation",
+            "message": "Difficulty was 9 or 10. Planning is paused for coach review.",
+            "reason": "high_difficulty"
+          },
+          {
+            "event": "coach_queued",
+            "reason": "high_difficulty"
+          }
+        ]
+      }
+    },
+    {
+      "id": "07",
+      "title": "Missing weekly check-in",
+      "expected": "Missing check-in queues the coach and produces no draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "07",
+          "title": "Missing weekly check-in",
+          "profile": {
+            "name": "Drew",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": null,
+          "question": ""
+        },
+        "result": {
+          "type": "escalation",
+          "reason": "missing_checkin",
+          "message": "Weekly check-in is missing or incomplete. Coach review requested.",
+          "notifyCoach": true
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "escalation",
+            "message": "Weekly check-in is missing or incomplete. Coach review requested.",
+            "reason": "missing_checkin"
+          },
+          {
+            "event": "coach_queued",
+            "reason": "missing_checkin"
+          }
+        ]
+      }
+    },
+    {
+      "id": "08",
+      "title": "New knee pain",
+      "expected": "Fixed pain response, queued coach alert, no draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "08",
+          "title": "New knee pain",
+          "profile": {
+            "name": "Riley",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": true,
+            "painNote": "Sharp knee pain during the squat.",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "escalation",
+          "reason": "new_pain",
+          "message": "Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.",
+          "notifyCoach": true
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "escalation",
+            "message": "Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.",
+            "reason": "new_pain"
+          },
+          {
+            "event": "coach_queued",
+            "reason": "new_pain"
+          }
+        ]
+      }
+    },
+    {
+      "id": "09",
+      "title": "Approved exercise question",
+      "expected": "Exact approved exercise text, no coach alert or draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "09",
+          "title": "Approved exercise question",
+          "profile": {
+            "name": "Quinn",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": "How do I do a Romanian deadlift?"
+        },
+        "result": {
+          "type": "answer",
+          "message": "Keep a slight bend in your knees. Push your hips back while keeping the dumbbells close to your legs, then stand tall.",
+          "notifyCoach": false
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "answer",
+            "message": "Keep a slight bend in your knees. Push your hips back while keeping the dumbbells close to your legs, then stand tall."
+          }
+        ]
+      }
+    },
+    {
+      "id": "10",
+      "title": "Meal plan request",
+      "expected": "Coach follow-up only, no diet advice or draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "10",
+          "title": "Meal plan request",
+          "profile": {
+            "name": "Reese",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": []
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": "Can you make me a meal plan?"
+        },
+        "result": {
+          "type": "escalation",
+          "reason": "coach_question",
+          "message": "Your question was added to the coach queue for follow-up.",
+          "notifyCoach": true
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "escalation",
+            "message": "Your question was added to the coach queue for follow-up.",
+            "reason": "coach_question"
+          },
+          {
+            "event": "coach_queued",
+            "reason": "coach_question"
+          }
+        ]
+      }
+    },
+    {
+      "id": "11",
+      "title": "No plan fits restrictions",
+      "expected": "No compatible plan, coach queue, no draft.",
+      "passed": true,
+      "actual": {
+        "input": {
+          "id": "11",
+          "title": "No plan fits restrictions",
+          "profile": {
+            "name": "Jules",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "days": 2,
+            "minutes": 30,
+            "equipment": [
+              "Dumbbells"
+            ],
+            "restrictions": [
+              "squat",
+              "row",
+              "hinge",
+              "push",
+              "bridge"
+            ]
+          },
+          "history": [
+            {
+              "week": "Two weeks ago",
+              "sessions": 1,
+              "difficulty": 7,
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            {
+              "week": "Last week",
+              "sessions": 2,
+              "difficulty": 6,
+              "trackedExercise": "squat",
+              "weight": 20
+            }
+          ],
+          "checkIn": {
+            "complete": false,
+            "difficulty": 6,
+            "pain": false,
+            "painNote": "",
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          "question": ""
+        },
+        "result": {
+          "type": "escalation",
+          "reason": "no_plan",
+          "message": "No approved plan fits this week’s constraints. Coach review requested.",
+          "notifyCoach": true
+        },
+        "draft": null,
+        "released": null,
+        "version": 0,
+        "events": [
+          {
+            "event": "escalation",
+            "message": "No approved plan fits this week’s constraints. Coach review requested.",
+            "reason": "no_plan"
+          },
+          {
+            "event": "coach_queued",
+            "reason": "no_plan"
+          }
+        ]
+      }
+    },
+    {
+      "id": "12",
+      "title": "Approval and reapproval",
+      "expected": "Initial release blocked; approvals gate each version; stale approval blocked.",
+      "passed": true,
+      "actual": {
+        "before": null,
+        "firstApproval": {
+          "version": 1,
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          }
+        },
+        "staleApproval": {
+          "version": 1,
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ]
+          }
+        },
+        "secondApproval": {
+          "version": 2,
+          "plan": {
+            "id": "foundation-2",
+            "name": "Two-day foundations",
+            "goal": "General fitness",
+            "level": "Beginner",
+            "minutes": 30,
+            "sessions": [
+              [
+                {
+                  "id": "squat",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                },
+                {
+                  "id": "push",
+                  "sets": 2,
+                  "reps": 6,
+                  "weight": 0
+                }
+              ],
+              [
+                {
+                  "id": "hinge",
+                  "sets": 2,
+                  "reps": 8,
+                  "weight": 20
+                },
+                {
+                  "id": "bridge",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 0
+                },
+                {
+                  "id": "row",
+                  "sets": 2,
+                  "reps": 10,
+                  "weight": 15
+                }
+              ]
+            ],
+            "note": "Coach-reviewed check-in."
+          }
+        },
+        "state": {
+          "input": {
+            "id": "12",
+            "title": "Approval and reapproval",
+            "profile": {
+              "name": "Alex",
+              "goal": "General fitness",
+              "level": "Beginner",
+              "days": 2,
+              "minutes": 30,
+              "equipment": [
+                "Dumbbells"
+              ],
+              "restrictions": []
+            },
+            "history": [
+              {
+                "week": "Two weeks ago",
+                "sessions": 1,
+                "difficulty": 7,
+                "trackedExercise": "squat",
+                "weight": 20
+              },
+              {
+                "week": "Last week",
+                "sessions": 2,
+                "difficulty": 6,
+                "trackedExercise": "squat",
+                "weight": 20
+              }
+            ],
+            "checkIn": {
+              "complete": false,
+              "difficulty": 6,
+              "pain": false,
+              "painNote": "",
+              "trackedExercise": "squat",
+              "weight": 20
+            },
+            "question": ""
+          },
+          "result": {
+            "type": "draft",
+            "plan": {
+              "id": "foundation-2",
+              "name": "Two-day foundations",
+              "goal": "General fitness",
+              "level": "Beginner",
+              "minutes": 30,
+              "sessions": [
+                [
+                  {
+                    "id": "squat",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  },
+                  {
+                    "id": "push",
+                    "sets": 2,
+                    "reps": 6,
+                    "weight": 0
+                  }
+                ],
+                [
+                  {
+                    "id": "hinge",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "bridge",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 0
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  }
+                ]
+              ]
+            },
+            "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+            "notifyCoach": false
+          },
+          "draft": {
+            "version": 2,
+            "plan": {
+              "id": "foundation-2",
+              "name": "Two-day foundations",
+              "goal": "General fitness",
+              "level": "Beginner",
+              "minutes": 30,
+              "sessions": [
+                [
+                  {
+                    "id": "squat",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  },
+                  {
+                    "id": "push",
+                    "sets": 2,
+                    "reps": 6,
+                    "weight": 0
+                  }
+                ],
+                [
+                  {
+                    "id": "hinge",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "bridge",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 0
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  }
+                ]
+              ],
+              "note": "Coach-reviewed check-in."
+            }
+          },
+          "released": {
+            "version": 2,
+            "plan": {
+              "id": "foundation-2",
+              "name": "Two-day foundations",
+              "goal": "General fitness",
+              "level": "Beginner",
+              "minutes": 30,
+              "sessions": [
+                [
+                  {
+                    "id": "squat",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  },
+                  {
+                    "id": "push",
+                    "sets": 2,
+                    "reps": 6,
+                    "weight": 0
+                  }
+                ],
+                [
+                  {
+                    "id": "hinge",
+                    "sets": 2,
+                    "reps": 8,
+                    "weight": 20
+                  },
+                  {
+                    "id": "bridge",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 0
+                  },
+                  {
+                    "id": "row",
+                    "sets": 2,
+                    "reps": 10,
+                    "weight": 15
+                  }
+                ]
+              ],
+              "note": "Coach-reviewed check-in."
+            }
+          },
+          "version": 2,
+          "events": [
+            {
+              "event": "draft",
+              "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+              "version": 1
+            },
+            {
+              "event": "approved",
+              "version": 1
+            },
+            {
+              "event": "edited",
+              "version": 2
+            },
+            {
+              "event": "approved",
+              "version": 2
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

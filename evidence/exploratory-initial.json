@@ -1,0 +1,114 @@
+{
+  "expected": "Pause client release on new pain and escalate an unlisted load for a tracked exercise.",
+  "actual": {
+    "newPain": {
+      "message": "Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.",
+      "clientPreview": {
+        "version": 1,
+        "plan": {
+          "id": "foundation-2",
+          "name": "Two-day foundations",
+          "goal": "General fitness",
+          "level": "Beginner",
+          "minutes": 30,
+          "sessions": [
+            [
+              {
+                "id": "squat",
+                "sets": 2,
+                "reps": 8,
+                "weight": 20
+              },
+              {
+                "id": "row",
+                "sets": 2,
+                "reps": 10,
+                "weight": 15
+              },
+              {
+                "id": "push",
+                "sets": 2,
+                "reps": 6,
+                "weight": 0
+              }
+            ],
+            [
+              {
+                "id": "hinge",
+                "sets": 2,
+                "reps": 8,
+                "weight": 20
+              },
+              {
+                "id": "bridge",
+                "sets": 2,
+                "reps": 10,
+                "weight": 0
+              },
+              {
+                "id": "row",
+                "sets": 2,
+                "reps": 10,
+                "weight": 15
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "unlistedLoad": {
+      "type": "draft",
+      "plan": {
+        "id": "foundation-2",
+        "name": "Two-day foundations",
+        "goal": "General fitness",
+        "level": "Beginner",
+        "minutes": 30,
+        "sessions": [
+          [
+            {
+              "id": "squat",
+              "sets": 2,
+              "reps": 8,
+              "weight": 20
+            },
+            {
+              "id": "row",
+              "sets": 2,
+              "reps": 10,
+              "weight": 15
+            },
+            {
+              "id": "push",
+              "sets": 2,
+              "reps": 6,
+              "weight": 0
+            }
+          ],
+          [
+            {
+              "id": "hinge",
+              "sets": 2,
+              "reps": 8,
+              "weight": 20
+            },
+            {
+              "id": "bridge",
+              "sets": 2,
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "id": "row",
+              "sets": 2,
+              "reps": 10,
+              "weight": 15
+            }
+          ]
+        ]
+      },
+      "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+      "notifyCoach": false
+    }
+  }
+}

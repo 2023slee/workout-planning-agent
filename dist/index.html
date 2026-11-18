@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Peer review sandbox for a coach-approved workout planning workflow.">
+  <title>Workout Planning Agent</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+<header>
+  <div class="frame topbar">
+    <a href="./" class="brand"><span class="mark" aria-hidden="true">↗</span> Workout Planning Agent</a>
+    <span class="environment"><i></i> CLASS SANDBOX</span>
+  </div>
+</header>
+<main class="frame">
+  <section class="intro">
+    <div><p class="kicker">COACH WORKSPACE</p><h1>Weekly planning</h1><p>Review a synthetic check-in, prepare an approved-library draft, and release it as the coach.</p></div>
+    <a class="outline" href="#reviewer-guide">Reviewer guide ↓</a>
+  </section>
+  <div class="workspace">
+    <aside>
+      <section class="card">
+        <div class="card-title"><h2>Test case</h2><span id="case-count" class="chip"></span></div>
+        <label for="cases" class="sr">Synthetic test case</label><select id="cases"></select>
+        <div id="profile"></div>
+        <details><summary>Two weeks of training history</summary><div id="history"></div></details>
+      </section>
+      <section class="card" id="reviewer-guide">
+        <h2>Reviewer guide</h2>
+        <ol><li>Run case 01 to see a standard draft.</li><li>Approve, edit the note, then compare the coach draft and client preview.</li><li>Run case 08 to see a simulated coach escalation.</li></ol>
+        <p class="muted small">Use synthetic information only. The coach role and all notifications are simulated in this browser.</p>
+        <button class="outline" id="reset" type="button">Reset case</button>
+      </section>
+    </aside>
+    <section class="card stage" aria-label="Planning workspace">
+      <nav aria-label="Workflow views">
+        <button class="tab active" type="button" data-view="checkin" aria-pressed="true">Check-in</button>
+        <button class="tab" type="button" data-view="coach" aria-pressed="false">Coach review</button>
+        <button class="tab" type="button" data-view="client" aria-pressed="false">Client preview</button>
+      </nav>
+      <div class="panel" id="checkin">
+        <h2>Weekly check-in</h2>
+        <p class="muted">Use the preset as provided or change the check-in to test a new outcome.</p>
+        <form id="run-form">
+          <label class="toggle"><input id="missing" type="checkbox"> Check-in missing</label>
+          <fieldset id="checkin-fields">
+            <legend class="sr">Check-in details</legend>
+            <div class="fields"><label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" required></label>
+            <label>Last goblet squat load (lb)<input id="weight" type="number" min="0" max="999" step="1" required></label></div>
+            <label class="toggle"><input id="complete" type="checkbox"> All prescribed sessions, sets, and reps completed</label>
+            <label class="toggle"><input id="pain" type="checkbox"> New pain reported</label>
+            <label>Check-in note<input id="pain-note" maxlength="280" placeholder="Optional synthetic note"></label>
+          </fieldset>
+          <label>Client question<input id="question" maxlength="280" placeholder="Optional exercise question"></label>
+          <div class="actions"><button class="primary" id="run" type="submit">Run agent</button></div>
+        </form>
+      </div>
+      <div class="panel" id="coach" hidden></div>
+      <div class="panel" id="client" hidden></div>
+    </section>
+  </div>
+  <section class="card log">
+    <div class="card-title"><h2>Run log</h2><button id="download" class="outline" type="button" disabled>Download JSON</button></div>
+    <div id="events" aria-live="polite"></div>
+  </section>
+</main>
+<footer class="frame">70-445 · Product Management Track <span>Midpoint prototype</span></footer>
+</body>
+</html>

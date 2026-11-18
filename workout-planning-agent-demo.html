@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Peer review sandbox for a coach-approved workout planning workflow.">
+  <title>Workout Planning Agent</title>
+  <style>
+:root{color-scheme:light;--paper:#f2f4ee;--white:#fff;--ink:#182923;--muted:#53645c;--line:#dce3d9;--accent:#185b44;--pale:#e6efe4;--warm:#fff3dc;font-family:Inter,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+button,input,select{font:inherit}
+button,a,input,select,summary{outline-offset:4px}
+button{cursor:pointer}
+button:disabled{cursor:default;opacity:.48}
+a{color:var(--accent)}
+header{background:var(--white);border-bottom:1px solid var(--line)}
+.frame{max-width:1160px;margin:auto;padding-inline:32px}
+.topbar{height:68px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{text-decoration:none;color:var(--ink);font-size:15px;font-weight:750;display:flex;align-items:center;gap:10px}
+.mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--accent);color:#fff;font-size:20px}
+.environment,.kicker{font:700 11px/1.3 ui-monospace,monospace;letter-spacing:.12em;color:var(--accent)}
+.environment{white-space:nowrap}.environment i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3b8c67;margin-right:5px}
+.intro{display:flex;justify-content:space-between;align-items:end;gap:18px;padding:45px 0 28px}
+h1,h2,h3,p{margin:0}
+h1{font-family:Georgia,serif;font-size:clamp(38px,6vw,65px);line-height:1.04;font-weight:400;letter-spacing:-.055em;margin:9px 0 11px}
+.intro p:not(.kicker),.muted{color:var(--muted)}
+h2{font-size:19px;letter-spacing:-.025em} h3{font-size:14px}
+.workspace{display:grid;grid-template-columns:minmax(265px, .85fr) minmax(0, 2fr);align-items:start;gap:20px}
+aside{display:grid;gap:16px}.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.card-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.chip{display:inline-block;padding:5px 8px;border-radius:6px;background:var(--pale);color:var(--accent);font:700 11px ui-monospace,monospace;white-space:nowrap}
+p,li{line-height:1.55}
+.small,details{font-size:13px}
+ol{padding-left:19px;font-size:14px;margin:10px 0 12px}.small{margin-bottom:14px}
+label{display:block;font-size:14px;font-weight:620}
+input:not([type=checkbox]),select{box-sizing:border-box;width:100%;border:1px solid #c9d4ca;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink);margin-top:5px}
+select{margin-top:0}
+input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.toggle{display:flex;gap:9px;align-items:center;margin:12px 0;font-weight:500}
+fieldset{margin:0 0 13px;padding:0;border:0;min-width:0}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:7px 13px;margin:15px 0;font-size:13px}
+dt{color:var(--muted)}dd{margin:0;font-weight:630}
+details{border-top:1px solid var(--line);padding-top:12px}summary{cursor:pointer;color:var(--accent);font-weight:650}
+details p{margin-top:7px}
+.stage{padding:0;overflow:hidden;min-height:455px}
+nav{padding:5px 15px 0;border-bottom:1px solid var(--line);background:#f9faf7;display:flex;gap:10px;flex-wrap:wrap}
+.tab{background:none;color:var(--muted);border:0;border-bottom:2px solid transparent;padding:13px 8px;font-weight:650;font-size:14px}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel{padding:23px}.panel>p{margin:6px 0 14px}.actions{display:flex;gap:9px;align-items:center;margin-top:17px;flex-wrap:wrap}
+.primary,.outline{border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700;text-decoration:none;display:inline-block;white-space:nowrap}
+.primary{border:1px solid var(--accent);background:var(--accent);color:#fff}
+.outline{border:1px solid var(--line);background:#fff;color:var(--accent)}
+.notice{padding:13px;background:var(--pale);border-radius:9px;margin:12px 0}.notice.alert{background:var(--warm)}
+.session{margin:14px 0 0}.session h3{margin:0 0 4px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:6px 5px}th{color:var(--muted)}
+.log{margin-top:20px}.log ul{padding-left:19px;margin:0}.log li{font-size:14px}
+footer{color:var(--muted);font-size:12px;display:flex;justify-content:space-between;padding-block:22px}
+.sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:750px){.frame{padding-inline:16px}.workspace{grid-template-columns:1fr}.intro{align-items:start;flex-direction:column;padding-top:27px}.stage{min-height:0}.panel{padding:17px}.environment{font-size:9px}aside{display:contents} #reviewer-guide{order:3}}
+</style>
+</head>
+<body>
+<header>
+  <div class="frame topbar">
+    <a href="./" class="brand"><span class="mark" aria-hidden="true">↗</span> Workout Planning Agent</a>
+    <span class="environment"><i></i> CLASS SANDBOX</span>
+  </div>
+</header>
+<main class="frame">
+  <section class="intro">
+    <div><p class="kicker">COACH WORKSPACE</p><h1>Weekly planning</h1><p>Review a synthetic check-in, prepare an approved-library draft, and release it as the coach.</p></div>
+    <a class="outline" href="#reviewer-guide">Reviewer guide ↓</a>
+  </section>
+  <div class="workspace">
+    <aside>
+      <section class="card">
+        <div class="card-title"><h2>Test case</h2><span id="case-count" class="chip"></span></div>
+        <label for="cases" class="sr">Synthetic test case</label><select id="cases"></select>
+        <div id="profile"></div>
+        <details><summary>Two weeks of training history</summary><div id="history"></div></details>
+      </section>
+      <section class="card" id="reviewer-guide">
+        <h2>Reviewer guide</h2>
+        <ol><li>Run case 01 to see a standard draft.</li><li>Approve, edit the note, then compare the coach draft and client preview.</li><li>Run case 08 to see a simulated coach escalation.</li></ol>
+        <p class="muted small">Use synthetic information only. The coach role and all notifications are simulated in this browser.</p>
+        <button class="outline" id="reset" type="button">Reset case</button>
+      </section>
+    </aside>
+    <section class="card stage" aria-label="Planning workspace">
+      <nav aria-label="Workflow views">
+        <button class="tab active" type="button" data-view="checkin" aria-pressed="true">Check-in</button>
+        <button class="tab" type="button" data-view="coach" aria-pressed="false">Coach review</button>
+        <button class="tab" type="button" data-view="client" aria-pressed="false">Client preview</button>
+      </nav>
+      <div class="panel" id="checkin">
+        <h2>Weekly check-in</h2>
+        <p class="muted">Use the preset as provided or change the check-in to test a new outcome.</p>
+        <form id="run-form">
+          <label class="toggle"><input id="missing" type="checkbox"> Check-in missing</label>
+          <fieldset id="checkin-fields">
+            <legend class="sr">Check-in details</legend>
+            <div class="fields"><label>Difficulty (1–10)<input id="difficulty" type="number" min="1" max="10" step="1" required></label>
+            <label>Last goblet squat load (lb)<input id="weight" type="number" min="0" max="999" step="1" required></label></div>
+            <label class="toggle"><input id="complete" type="checkbox"> All prescribed sessions, sets, and reps completed</label>
+            <label class="toggle"><input id="pain" type="checkbox"> New pain reported</label>
+            <label>Check-in note<input id="pain-note" maxlength="280" placeholder="Optional synthetic note"></label>
+          </fieldset>
+          <label>Client question<input id="question" maxlength="280" placeholder="Optional exercise question"></label>
+          <div class="actions"><button class="primary" id="run" type="submit">Run agent</button></div>
+        </form>
+      </div>
+      <div class="panel" id="coach" hidden></div>
+      <div class="panel" id="client" hidden></div>
+    </section>
+  </div>
+  <section class="card log">
+    <div class="card-title"><h2>Run log</h2><button id="download" class="outline" type="button" disabled>Download JSON</button></div>
+    <div id="events" aria-live="polite"></div>
+  </section>
+</main>
+<footer class="frame">70-445 · Product Management Track <span>Midpoint prototype</span></footer>
+<script>
+const exercises = {
+  squat: { name: 'Goblet squat', gear: 'Dumbbells', loads: [10, 15, 20, 25, 30], instructions: 'Hold one dumbbell close to your chest. Sit down between your hips, then stand tall.' },
+  row: { name: 'Dumbbell row', gear: 'Dumbbells', loads: [10, 15, 20, 25, 30], instructions: 'Hinge at the hips and draw the dumbbell toward your ribs. Lower it with control.' },
+  hinge: { name: 'Dumbbell Romanian deadlift', gear: 'Dumbbells', loads: [15, 20, 25, 30], instructions: 'Keep a slight bend in your knees. Push your hips back while keeping the dumbbells close to your legs, then stand tall.' },
+  push: { name: 'Push-up', gear: 'Bodyweight', loads: [0] },
+  bridge: { name: 'Glute bridge', gear: 'Bodyweight', loads: [0] },
+  press: { name: 'Bench press', gear: 'Barbell', loads: [45, 55, 65, 75] },
+  pull: { name: 'Lat pulldown', gear: 'Cable', loads: [40, 50, 60, 70] },
+  deadlift: { name: 'Barbell deadlift', gear: 'Barbell', loads: [65, 75, 85, 95] }
+};
+
+const exercise = (id, sets, reps, weight) => ({ id, sets, reps, weight });
+const beginnerA = [exercise('squat', 2, 8, 20), exercise('row', 2, 10, 15), exercise('push', 2, 6, 0)];
+const beginnerB = [exercise('hinge', 2, 8, 20), exercise('bridge', 2, 10, 0), exercise('row', 2, 10, 15)];
+const strengthA = [exercise('press', 3, 8, 65), exercise('pull', 3, 8, 50)];
+const strengthB = [exercise('deadlift', 3, 6, 75), exercise('squat', 3, 8, 25)];
+
+const plans = [
+  { id: 'foundation-2', name: 'Two-day foundations', goal: 'General fitness', level: 'Beginner', minutes: 30, sessions: [beginnerA, beginnerB] },
+  { id: 'foundation-3', name: 'Three-day foundations', goal: 'General fitness', level: 'Beginner', minutes: 30, sessions: [beginnerA, beginnerB, beginnerA] },
+  { id: 'strength-2', name: 'Two-day strength', goal: 'Strength', level: 'Experienced', minutes: 45, sessions: [strengthA, strengthB] },
+  { id: 'strength-3', name: 'Three-day strength', goal: 'Strength', level: 'Experienced', minutes: 45, sessions: [strengthA, strengthB, strengthA] },
+  { id: 'strength-4', name: 'Four-day strength', goal: 'Strength', level: 'Experienced', minutes: 45, sessions: [strengthA, strengthB, strengthA, strengthB] },
+  { id: 'strength-db-2', name: 'Two-day dumbbell strength', goal: 'Strength', level: 'Experienced', minutes: 30, sessions: [beginnerA, beginnerB] },
+  { id: 'bodyweight-2', name: 'Two-day bodyweight foundations', goal: 'General fitness', level: 'Beginner', minutes: 20, sessions: [[exercise('push', 2, 5, 0), exercise('bridge', 2, 10, 0)], [exercise('bridge', 2, 10, 0), exercise('push', 2, 5, 0)]] }
+];
+
+const gym = ['Dumbbells', 'Barbell', 'Cable'];
+const profile = { name: 'Jordan', goal: 'General fitness', level: 'Beginner', days: 2, minutes: 30, equipment: ['Dumbbells'], restrictions: [] };
+const experienced = { name: 'Casey', goal: 'Strength', level: 'Experienced', days: 4, minutes: 50, equipment: gym };
+const history = (days, weight) => [
+  { week: 'Two weeks ago', sessions: Math.max(1, days - 1), difficulty: 7, trackedExercise: 'squat', weight },
+  { week: 'Last week', sessions: days, difficulty: 6, trackedExercise: 'squat', weight }
+];
+const defaultCheckIn = { complete: false, difficulty: 6, pain: false, painNote: '', trackedExercise: 'squat', weight: 20 };
+const scenario = (id, title, profileChanges, changes = {}) => ({
+  id, title, profile: { ...profile, ...profileChanges },
+  history: history(changes.priorDays ?? profileChanges.days ?? 2, changes.checkIn?.weight ?? 20),
+  checkIn: defaultCheckIn, question: '', ...changes
+});
+const cases = [
+  scenario('01', 'Beginner with two short sessions', {}),
+  scenario('02', 'Experienced client with full gym', experienced),
+  scenario('03', 'Dumbbells only', { name: 'Avery', goal: 'Strength', level: 'Experienced' }),
+  scenario('04', 'Schedule drops from four days to two', { ...experienced, name: 'Morgan', days: 2 }, { priorDays: 4 }),
+  scenario('05', 'Approved weight progression', { name: 'Taylor' }, { checkIn: { ...defaultCheckIn, complete: true } }),
+  scenario('06', 'Difficulty 10', { name: 'Cameron' }, { checkIn: { ...defaultCheckIn, difficulty: 10 } }),
+  scenario('07', 'Missing weekly check-in', { name: 'Drew' }, { checkIn: null }),
+  scenario('08', 'New knee pain', { name: 'Riley' }, { checkIn: { ...defaultCheckIn, pain: true, painNote: 'Sharp knee pain during the squat.' } }),
+  scenario('09', 'Approved exercise question', { name: 'Quinn' }, { question: 'How do I do a Romanian deadlift?' }),
+  scenario('10', 'Meal plan request', { name: 'Reese' }, { question: 'Can you make me a meal plan?' }),
+  scenario('11', 'No plan fits restrictions', { name: 'Jules', restrictions: ['squat', 'row', 'hinge', 'push', 'bridge'] }),
+  scenario('12', 'Approval and reapproval', { name: 'Alex' })
+];
+
+
+const painReply = 'Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.';
+const route = (reason, message) => ({ type: 'escalation', reason, message, notifyCoach: true });
+
+function handleQuestion(question) {
+  const query = question.trim().toLowerCase();
+  const approved = {
+    'how do i do a romanian deadlift?': 'hinge',
+    'how do i do a dumbbell romanian deadlift?': 'hinge',
+    'how do i do a goblet squat?': 'squat',
+    'how do i do a dumbbell row?': 'row'
+  };
+  const exercise = Object.hasOwn(approved, query) ? exercises[approved[query]] : null;
+  if (exercise) return { type: 'answer', message: exercise.instructions, notifyCoach: false };
+  return route('coach_question', 'Your question was added to the coach queue for follow-up.');
+}
+
+function recommend({ profile, checkIn, question }) {
+  if (checkIn?.pain === true) return route('new_pain', painReply);
+  if (question?.trim()) return handleQuestion(question);
+
+  const validCheckIn = checkIn && Number.isInteger(checkIn.difficulty) &&
+    checkIn.difficulty >= 1 && checkIn.difficulty <= 10 &&
+    typeof checkIn.pain === 'boolean' && typeof checkIn.complete === 'boolean';
+  if (!validCheckIn) return route('missing_checkin', 'Weekly check-in is missing or incomplete. Coach review requested.');
+  if (checkIn.difficulty >= 9) return route('high_difficulty', 'Difficulty was 9 or 10. Planning is paused for coach review.');
+
+  const eligible = plans.filter(plan => plan.goal === profile.goal && plan.level === profile.level &&
+    plan.sessions.length === profile.days && plan.minutes <= profile.minutes &&
+    plan.sessions.flat().every(({ id }) => !profile.restrictions.includes(id) &&
+      (exercises[id].gear === 'Bodyweight' || profile.equipment.includes(exercises[id].gear))));
+  if (!eligible.length) return route('no_plan', 'No approved plan fits this week’s constraints. Coach review requested.');
+
+  eligible.sort((first, second) => second.minutes - first.minutes || first.id.localeCompare(second.id));
+  const plan = structuredClone(eligible[0]);
+  const tracked = exercises[checkIn.trackedExercise];
+  const listedIndex = tracked?.loads.indexOf(checkIn.weight) ?? -1;
+  const tracksSelectedExercise = plan.sessions.flat().some(entry => entry.id === checkIn.trackedExercise);
+  if (tracksSelectedExercise && listedIndex < 0) {
+    return route('unlisted_load', 'The reported load is outside the approved list. Coach review requested.');
+  }
+  const nextWeight = listedIndex >= 0 ? tracked.loads[listedIndex + 1] : undefined;
+  const progress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;
+  let changed = false;
+  for (const session of plan.sessions) {
+    for (const entry of session) {
+      if (entry.id !== checkIn.trackedExercise || listedIndex < 0) continue;
+      entry.weight = progress ? nextWeight : checkIn.weight;
+      changed ||= progress;
+    }
+  }
+
+  const rationale = `Matches the ${plan.goal.toLowerCase()} goal and ${plan.level.toLowerCase()} level, with ${plan.sessions.length} sessions of ${plan.minutes} minutes using available equipment.`;
+  const progression = changed ? ` ${tracked.name} moves from ${checkIn.weight} to the next listed load, ${nextWeight} lb.` : '';
+  return { type: 'draft', plan, message: rationale + progression, notifyCoach: false };
+}
+
+function startCase(input) {
+  return { input, result: null, draft: null, released: null, version: 0, events: [] };
+}
+
+function record(state, event, details) {
+  return [...state.events, { event, ...details }];
+}
+
+function generate(state) {
+  const result = recommend(state.input);
+  const version = state.version + Number(result.type === 'draft');
+  const draft = result.type === 'draft' ? { version, plan: result.plan } : null;
+  let events = record(state, result.type, { message: result.message, reason: result.reason, version: draft?.version });
+  if (result.notifyCoach) events = [...events, { event: 'coach_queued', reason: result.reason }];
+  const releaseWithdrawn = result.reason === 'new_pain' && state.released;
+  if (releaseWithdrawn) events = [...events, { event: 'release_withdrawn', version: state.released.version }];
+  const released = releaseWithdrawn ? null : state.released;
+  return { ...state, result, draft, released, version, events };
+}
+
+function edit(state, note) {
+  const clean = note.trim();
+  if (!state.draft || !clean || clean === state.draft.plan.note) return state;
+  const version = state.version + 1;
+  const draft = { version, plan: { ...state.draft.plan, note: clean } };
+  return { ...state, draft, version, events: record(state, 'edited', { version }) };
+}
+
+function approve(state, version) {
+  if (!state.draft || version !== state.draft.version || state.released?.version === version) return state;
+  const released = structuredClone(state.draft);
+  return { ...state, released, events: record(state, 'approved', { version }) };
+}
+
+function clientView(state) {
+  return state.released ? structuredClone(state.released) : null;
+}
+
+
+const get = id => document.getElementById(id);
+const make = (tag, text, classes) => {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (classes) node.className = classes;
+  return node;
+};
+let state;
+const tabs = [...document.querySelectorAll('.tab')];
+const stages = tabs.map(tab => tab.dataset.view);
+const summaries = {
+  draft: 'Draft generated', escalation: 'Planning paused', answer: 'Library answer',
+  coach_queued: 'Simulated coach notification', approved: 'Approved and released',
+  edited: 'Edited, awaiting approval', release_withdrawn: 'Approved plan withdrawn after pain report'
+};
+
+function selectView(view) {
+  for (const tab of tabs) {
+    const active = tab.dataset.view === view;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-pressed', String(active));
+  }
+  for (const stage of stages) get(stage).hidden = stage !== view;
+}
+
+function loadCase(id) {
+  const input = structuredClone(cases.find(item => item.id === id));
+  state = startCase(input);
+  get('case-count').textContent = `${id} / ${cases.length}`;
+  const profile = input.profile;
+  const facts = {
+    Client: profile.name, Goal: profile.goal, Experience: profile.level,
+    Availability: `${profile.days} days × ${profile.minutes} min`,
+    Equipment: profile.equipment.join(', ') || 'Bodyweight only',
+    Restrictions: profile.restrictions.map(id => exercises[id].name).join(', ') || 'None'
+  };
+  const list = make('dl');
+  for (const [label, value] of Object.entries(facts)) list.append(make('dt', label), make('dd', value));
+  get('profile').replaceChildren(list);
+  get('history').replaceChildren(...input.history.map(row =>
+    make('p', `${row.week} · ${row.sessions} sessions · difficulty ${row.difficulty} · ${row.weight} lb goblet squat`)));
+  get('missing').checked = input.checkIn === null;
+  get('checkin-fields').disabled = input.checkIn === null;
+  get('difficulty').value = input.checkIn?.difficulty ?? 6;
+  get('weight').value = input.checkIn?.weight ?? 20;
+  get('complete').checked = input.checkIn?.complete ?? false;
+  get('pain').checked = input.checkIn?.pain ?? false;
+  get('pain-note').value = input.checkIn?.painNote ?? '';
+  get('question').value = input.question;
+  render();
+  selectView('checkin');
+}
+
+function renderPlan(container, versioned) {
+  const { plan, version } = versioned;
+  container.append(make('p', `${plan.name} · ${plan.minutes} min per session · Version ${version}`, 'chip'));
+  if (plan.note) container.append(make('p', `Coach note · ${plan.note}`, 'notice'));
+  plan.sessions.forEach((session, index) => {
+    const section = make('section', undefined, 'session');
+    section.append(make('h3', `Session ${index + 1}`));
+    const table = make('table');
+    const header = table.createTHead().insertRow();
+    for (const heading of ['Exercise', 'Sets', 'Reps', 'Load']) {
+      const cell = make('th', heading);
+      cell.scope = 'col';
+      header.append(cell);
+    }
+    const body = table.createTBody();
+    for (const entry of session) {
+      const row = body.insertRow();
+      for (const value of [exercises[entry.id].name, entry.sets, entry.reps, entry.weight ? `${entry.weight} lb` : 'Bodyweight']) {
+        row.append(make('td', String(value)));
+      }
+    }
+    section.append(table);
+    container.append(section);
+  });
+}
+
+function render() {
+  const coach = get('coach');
+  coach.replaceChildren(make('h2', 'Coach review'));
+  if (!state.result) coach.append(make('p', 'Run a check-in to see the coach’s decision.', 'muted'));
+  if (state.result) {
+    const message = make('p', state.result.message, state.result.notifyCoach ? 'notice alert' : 'notice');
+    message.setAttribute('role', 'status');
+    coach.append(message);
+  }
+  if (state.result?.notifyCoach) {
+    coach.append(make('p', 'Added to the simulated coach queue.', 'muted'));
+    if (state.input.checkIn?.painNote) coach.append(make('p', state.input.checkIn.painNote));
+  }
+  if (state.draft) {
+    const { version, plan } = state.draft;
+    renderPlan(coach, state.draft);
+    const editForm = make('form', undefined, 'actions');
+    const note = make('input');
+    note.id = 'coach-note';
+    note.maxLength = 240;
+    note.required = true;
+    note.value = plan.note ?? '';
+    note.placeholder = 'Add a note to the client’s plan';
+    const label = make('label', 'Coach note');
+    label.htmlFor = note.id;
+    label.append(note);
+    const save = make('button', 'Save edit', 'outline');
+    save.type = 'submit';
+    editForm.append(label, save);
+    editForm.addEventListener('submit', event => {
+      event.preventDefault();
+      state = edit(state, note.value);
+      render();
+      get('coach-note').focus();
+    });
+    const accept = make('button', 'Approve and release', 'primary');
+    accept.type = 'button';
+    accept.disabled = state.released?.version === version;
+    if (accept.disabled) accept.textContent = 'Version approved';
+    accept.addEventListener('click', () => {
+      state = approve(state, version);
+      render();
+      document.querySelector('[data-view="client"]').focus();
+    });
+    const actions = make('div', undefined, 'actions');
+    actions.append(accept);
+    coach.append(editForm, actions);
+  }
+
+  const client = get('client');
+  client.replaceChildren(make('h2', 'Client preview'));
+  const released = clientView(state);
+  if (released) {
+    if (released.version !== state.draft?.version) {
+      client.append(make('p', `Showing approved version ${released.version}. Any new draft awaits coach approval.`, 'notice'));
+    }
+    renderPlan(client, released);
+  } else {
+    const display = state.result?.type === 'draft' ? 'Awaiting coach approval.' :
+      state.result?.type === 'answer' || state.result?.reason === 'new_pain' ? state.result.message : 'No plan released.';
+    client.append(make('p', display, 'notice'));
+  }
+
+  const events = get('events');
+  get('download').disabled = !state.events.length;
+  if (!state.events.length) {
+    events.replaceChildren(make('p', 'No runs recorded for this case.', 'muted'));
+    return;
+  }
+  const log = make('ul');
+  for (const event of state.events) {
+    log.append(make('li', summaries[event.event] + (event.version ? ` · version ${event.version}` : '') +
+      (event.message ? ` · ${event.message}` : '')));
+  }
+  events.replaceChildren(log);
+}
+
+for (const item of cases) {
+  const option = make('option', `${item.id} · ${item.title}`);
+  option.value = item.id;
+  get('cases').append(option);
+}
+get('cases').addEventListener('change', event => loadCase(event.target.value));
+get('reset').addEventListener('click', () => loadCase(get('cases').value));
+get('missing').addEventListener('change', event => { get('checkin-fields').disabled = event.target.checked; });
+tabs.forEach(tab => tab.addEventListener('click', () => selectView(tab.dataset.view)));
+get('run-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const checkIn = get('missing').checked ? null : {
+    difficulty: get('difficulty').valueAsNumber, complete: get('complete').checked,
+    pain: get('pain').checked, painNote: get('pain-note').value, trackedExercise: 'squat',
+    weight: get('weight').valueAsNumber
+  };
+  state = generate({ ...state, input: { ...state.input, checkIn, question: get('question').value } });
+  render();
+  selectView('coach');
+  document.querySelector('[data-view="coach"]').focus();
+});
+get('download').addEventListener('click', () => {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }));
+  const anchor = make('a');
+  anchor.href = url;
+  anchor.download = `case-${state.input.id}-run.json`;
+  anchor.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+loadCase(cases[0].id);
+
+</script>
+</body>
+</html>

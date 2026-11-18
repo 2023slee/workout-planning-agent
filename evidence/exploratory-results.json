@@ -1,0 +1,146 @@
+{
+  "ranAtUtc": "2026-11-18T00:22:48.459Z",
+  "newPain": {
+    "passed": true,
+    "actual": {
+      "input": {
+        "id": "01",
+        "title": "Beginner with two short sessions",
+        "profile": {
+          "name": "Jordan",
+          "goal": "General fitness",
+          "level": "Beginner",
+          "days": 2,
+          "minutes": 30,
+          "equipment": [
+            "Dumbbells"
+          ],
+          "restrictions": []
+        },
+        "history": [
+          {
+            "week": "Two weeks ago",
+            "sessions": 1,
+            "difficulty": 7,
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          {
+            "week": "Last week",
+            "sessions": 2,
+            "difficulty": 6,
+            "trackedExercise": "squat",
+            "weight": 20
+          }
+        ],
+        "checkIn": {
+          "complete": false,
+          "difficulty": 6,
+          "pain": true,
+          "painNote": "",
+          "trackedExercise": "squat",
+          "weight": 20
+        },
+        "question": ""
+      },
+      "result": {
+        "type": "escalation",
+        "reason": "new_pain",
+        "message": "Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.",
+        "notifyCoach": true
+      },
+      "draft": null,
+      "released": null,
+      "version": 1,
+      "events": [
+        {
+          "event": "draft",
+          "message": "Matches the general fitness goal and beginner level, with 2 sessions of 30 minutes using available equipment.",
+          "version": 1
+        },
+        {
+          "event": "approved",
+          "version": 1
+        },
+        {
+          "event": "escalation",
+          "message": "Stop that exercise. Your coach has been notified and will reach out. If the pain is severe, contact a doctor.",
+          "reason": "new_pain"
+        },
+        {
+          "event": "coach_queued",
+          "reason": "new_pain"
+        },
+        {
+          "event": "release_withdrawn",
+          "version": 1
+        }
+      ]
+    }
+  },
+  "unlistedLoad": {
+    "passed": true,
+    "actual": {
+      "input": {
+        "id": "01",
+        "title": "Beginner with two short sessions",
+        "profile": {
+          "name": "Jordan",
+          "goal": "General fitness",
+          "level": "Beginner",
+          "days": 2,
+          "minutes": 30,
+          "equipment": [
+            "Dumbbells"
+          ],
+          "restrictions": []
+        },
+        "history": [
+          {
+            "week": "Two weeks ago",
+            "sessions": 1,
+            "difficulty": 7,
+            "trackedExercise": "squat",
+            "weight": 20
+          },
+          {
+            "week": "Last week",
+            "sessions": 2,
+            "difficulty": 6,
+            "trackedExercise": "squat",
+            "weight": 20
+          }
+        ],
+        "checkIn": {
+          "complete": false,
+          "difficulty": 6,
+          "pain": false,
+          "painNote": "",
+          "trackedExercise": "squat",
+          "weight": 22
+        },
+        "question": ""
+      },
+      "result": {
+        "type": "escalation",
+        "reason": "unlisted_load",
+        "message": "The reported load is outside the approved list. Coach review requested.",
+        "notifyCoach": true
+      },
+      "draft": null,
+      "released": null,
+      "version": 0,
+      "events": [
+        {
+          "event": "escalation",
+          "message": "The reported load is outside the approved list. Coach review requested.",
+          "reason": "unlisted_load"
+        },
+        {
+          "event": "coach_queued",
+          "reason": "unlisted_load"
+        }
+      ]
+    }
+  }
+}
