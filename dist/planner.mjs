@@ -47,15 +47,16 @@ export function recommend({ profile, checkIn, question }) {
   for (const entry of plan.sessions.flat()) {
     if (!Object.hasOwn(reportedLoads, entry.id)) continue;
     const exercise = exercises[entry.id];
+    if (exercise.gear === 'Bodyweight') continue;
     const weight = reportedLoads[entry.id];
-    const index = exercise.loads.indexOf(weight);
-    if (index < 0 && entry.id === 'press' && Number.isFinite(weight) && weight >= 0 && weight <= 999) {
-      entry.weight = weight;
-      adjustments.set(entry.id, `Bench press stays at the reported ${weight} lb for coach review, with no automatic increase`);
-      continue;
+    if (!Number.isFinite(weight) || weight < 0) {
+      return route('invalid_load', `${exercise.name}: enter a valid nonnegative load. Coach review requested.`);
     }
+    const index = exercise.loads.indexOf(weight);
     if (index < 0) {
-      return route('unlisted_load', `${exercise.name}: the reported load is outside the approved list. Coach review requested.`);
+      entry.weight = weight;
+      adjustments.set(entry.id, `${exercise.name} stays at the reported ${weight} lb for coach review, with no automatic increase`);
+      continue;
     }
     const nextWeight = exercise.loads[index + 1];
     const canProgress = checkIn.complete && checkIn.difficulty <= 7 && nextWeight !== undefined;

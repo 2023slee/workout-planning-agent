@@ -19,7 +19,7 @@ For development, serve `dist/` with a local static server, for example `python3 
 3. Select case 08 and click **Run agent**. Verify that the simulated coach queue receives a notification and that the plan is paused.
 4. Use **Download JSON** before switching cases. Switching cases or hitting **Reset case** starts a fresh session.
 
-To test the updated check-in, enter loads for any weighted exercises shown for the selected plan. Blank fields keep their library loads. Ratings of **1–3** (too easy) or **9–10** pause drafting and go to coach review.
+To test the updated check-in, enter loads for any weighted exercises shown for the selected plan. Blank fields keep their library loads. Reported loads outside the progression list stay at the entered value for coach approval without an automatic increase. Ratings of **1–3** (too easy) or **9–10** pause drafting and go to coach review.
 
 ## Test Exhibit A
 

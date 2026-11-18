@@ -38,7 +38,6 @@ function renderLoadInputs(profile, checkIn) {
     const input = make('input');
     input.type = 'number';
     input.min = '0';
-    input.max = '999';
     input.step = 'any';
     input.dataset.exercise = id;
     input.placeholder = `Plan: ${entry.weight} lb`;
