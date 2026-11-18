@@ -4,6 +4,8 @@ A 70-445 midpoint sandbox for drafting and reviewing a weekly workout plan. All 
 
 ## Open the demo
 
+[Run the live demo on Vercel](https://workout-planning-agent.vercel.app/). For an offline copy, follow the steps below.
+
 1. Open [workout-planning-agent-demo.html](workout-planning-agent-demo.html) on GitHub.
 2. Click **Download raw file** (the download icon on the file toolbar). You can also choose **Code → Download ZIP** from the repository home page and unzip it.
 3. Open the saved `.html` file in Chrome or another current browser. The demo runs offline and needs no login, API key, or installation.
